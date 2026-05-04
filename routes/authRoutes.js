@@ -1,6 +1,6 @@
 // authRoutes.js
 
-import express from 'express';
+import express from 'express'; 
 import {
     registerUser,
     loginUser,
