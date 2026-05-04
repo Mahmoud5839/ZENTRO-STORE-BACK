@@ -33,11 +33,11 @@ const connectDB = async () => {
 // middleware
 app.use(cors({
     origin: ['http://localhost:5173', 'https://zentro-store.vercel.app', 'https://zentro-store-5000.vercel.app'],
-    methods: ["Access-Control-Allow-Methods", "GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
     allowedHeaders: ["Content-Type", "Authorization"],
 }));
 
-app.options('*', cors());
+app.use(cors());
 
 app.use(express.json());
 
