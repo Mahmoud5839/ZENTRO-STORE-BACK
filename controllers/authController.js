@@ -221,14 +221,12 @@ export const forgotPassword = async (req, res) => {
 
     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
 
-    //   فقط يطبع الرابط في Terminal للتجربة المحلية
     console.log('\n========================================');
-    console.log(' رابط إعادة تعيين كلمة المرور:');
+    console.log(' Link of Rechange Password (for development):');
     console.log(resetUrl);
-    console.log(' صالح لمدة 30 دقيقة');
+    console.log(' This Link is aviable for 30 minutes');
     console.log('========================================\n');
 
-    //   العميل يرى نجاح (دون خطأ)
     res.json({
       message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني (في التطوير، تحقق من الطرفية)'
     });

@@ -96,7 +96,6 @@ export const userReply = async (req, res) => {
       return res.status(404).json({ message: 'التذكرة غير موجودة' });
     }
 
-    // التحقق من أن العميل هو صاحب التذكرة
     if (ticket.user?.toString() !== req.user._id.toString() && ticket.email !== req.user.email) {
       return res.status(403).json({ message: 'غير مصرح لك بالرد على هذه التذكرة' });
     }
@@ -110,7 +109,6 @@ export const userReply = async (req, res) => {
     ticket.isReplied = true;
     await ticket.save();
 
-    // ✅ إشعار للأدمن برد جديد من العميل
     await Notification.create({
       user: null,
       title: ' رد جديد من عميل',
