@@ -169,20 +169,20 @@ export const googleAuth = async (req, res) => {
 
 //     //  إرسال الإيميل
 //     const mailOptions = {
-//       from: `"متجر ألماسة" <${process.env.EMAIL_USER}>`,
+//       from: `"Zentro Store" <${process.env.EMAIL_USER}>`,
 //       to: user.email,
-//       subject: 'إعادة تعيين كلمة المرور - متجر ألماسة',
+//       subject: 'إعادة تعيين كلمة المرور - Zentro Store',
 //       html: `
 //         <div dir="rtl" style="font-family: 'Cairo', sans-serif; padding: 20px;">
 //           <h2 style="color: #2563eb;"> إعادة تعيين كلمة المرور</h2>
 //           <p>مرحباً ${user.name}،</p>
-//           <p>لقد طلبت إعادة تعيين كلمة المرور لحسابك في متجر ألماسة.</p>
+//           <p>لقد طلبت إعادة تعيين كلمة المرور لحسابك في متجر Zentro Store.</p>
 //           <p>اضغط على الرابط أدناه لإكمال العملية:</p>
 //           <a href="${resetUrl}" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;">إعادة تعيين كلمة المرور</a>
 //           <p> هذا الرابط صالح لمدة 30 دقيقة فقط.</p>
 //           <p>إذا لم تطلب إعادة التعيين، يرجى تجاهل هذا الإيميل.</p>
 //           <hr />
-//           <p style="color: #6b7280; font-size: 12px;">متجر ألماسة - جميع الحقوق محفوظة</p>
+//           <p style="color: #6b7280; font-size: 12px;"> Zentro Store - جميع الحقوق محفوظة</p>
 //         </div>
 //       `,
 //     };
@@ -219,7 +219,7 @@ export const forgotPassword = async (req, res) => {
       }
     );
 
-    const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
+    const resetUrl = `${process.env.FRONTEND_URL1}/reset-password/${resetToken}`;
 
     console.log('\n========================================');
     console.log(' Link of Rechange Password (for development):');
