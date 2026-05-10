@@ -134,71 +134,6 @@ export const googleAuth = async (req, res) => {
 };
 
 
-
-// export const forgotPassword = async (req, res) => {
-//   try {
-//     const { email } = req.body;
-//     console.log("📧 Forgot password request for:", email);
-
-//     const user = await User.findOne({ email });
-
-//     if (!user) {
-//       return res.status(404).json({ message: 'لا يوجد مستخدم بهذا البريد الإلكتروني' });
-//     }
-
-//     // إنشاء رمز عشوائي
-//     const resetToken = crypto.randomBytes(32).toString('hex');
-//     console.log("🔑 Reset token generated:", resetToken);
-
-//     // تحديث المستخدم بالرمز
-//     await User.updateOne(
-//       { _id: user._id },
-//       {
-//         $set: {
-//           resetPasswordToken: resetToken,
-//           resetPasswordExpire: Date.now() + 30 * 60 * 1000,
-//         },
-//       }
-//     );
-
-//     console.log("💾 User updated with token");
-
-//     // رابط إعادة التعيين
-//     const resetUrl = `${process.env.FRONTEND_URL}/reset-password/${resetToken}`;
-//     console.log("🔗 Reset URL:", resetUrl);
-
-//     //  إرسال الإيميل
-//     const mailOptions = {
-//       from: `"Zentro Store" <${process.env.EMAIL_USER}>`,
-//       to: user.email,
-//       subject: 'إعادة تعيين كلمة المرور - Zentro Store',
-//       html: `
-//         <div dir="rtl" style="font-family: 'Cairo', sans-serif; padding: 20px;">
-//           <h2 style="color: #2563eb;"> إعادة تعيين كلمة المرور</h2>
-//           <p>مرحباً ${user.name}،</p>
-//           <p>لقد طلبت إعادة تعيين كلمة المرور لحسابك في متجر Zentro Store.</p>
-//           <p>اضغط على الرابط أدناه لإكمال العملية:</p>
-//           <a href="${resetUrl}" style="background-color: #2563eb; color: white; padding: 10px 20px; text-decoration: none; border-radius: 5px; display: inline-block; margin: 10px 0;">إعادة تعيين كلمة المرور</a>
-//           <p> هذا الرابط صالح لمدة 30 دقيقة فقط.</p>
-//           <p>إذا لم تطلب إعادة التعيين، يرجى تجاهل هذا الإيميل.</p>
-//           <hr />
-//           <p style="color: #6b7280; font-size: 12px;"> Zentro Store - جميع الحقوق محفوظة</p>
-//         </div>
-//       `,
-//     };
-
-//     await transporter.sendMail(mailOptions);
-//     console.log("  Email sent successfully");
-
-//     res.json({ message: 'تم إرسال رابط إعادة تعيين كلمة المرور إلى بريدك الإلكتروني' });
-
-//   } catch (error) {
-//     console.error("❌ Error in forgotPassword:", error);
-//     res.status(500).json({ message: error.message });
-//   }
-// };
-
-
 export const forgotPassword = async (req, res) => {
   try {
     const { email } = req.body;
@@ -250,7 +185,6 @@ export const resetPassword = async (req, res) => {
       return res.status(400).json({ message: 'رابط غير صالح أو منتهي الصلاحية' });
     }
 
-    // تحديث كلمة المرور
     user.password = password;
     user.resetPasswordToken = null;
     user.resetPasswordExpire = null;
@@ -312,16 +246,13 @@ export const resendVerification = async (req, res) => {
       return res.status(400).json({ message: 'البريد الإلكتروني مؤكد بالفعل' });
     }
 
-    // إنشاء رمز تأكيد جديد
     const verificationToken = crypto.randomBytes(32).toString('hex');
     user.emailVerificationToken = verificationToken;
     user.emailVerificationExpire = Date.now() + 30 * 60 * 1000; // 30 دقيقة
     await user.save();
 
-    // رابط تأكيد البريد الإلكتروني
     const verificationUrl = `${process.env.FRONTEND_URL}/verify-email/${verificationToken}`;
 
-    // إعداد البريد الإلكتروني
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST || 'smtp.gmail.com',
       port: 465,
@@ -332,7 +263,6 @@ export const resendVerification = async (req, res) => {
       },
     });
 
-    // إرسال إيميل التأكيد
     await transporter.sendMail({
       from: process.env.EMAIL_USER,
       to: user.email,

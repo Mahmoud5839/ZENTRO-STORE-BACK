@@ -9,7 +9,6 @@ export const createReturnRequest = async (req, res) => {
     
     console.log("📦 Received return request:", { order, product, quantity, reason, phone });
     
-    // التحقق من البيانات المطلوبة
     if (!order) {
       return res.status(400).json({ message: 'رقم الطلب مطلوب' });
     }
@@ -37,7 +36,6 @@ export const createReturnRequest = async (req, res) => {
       return res.status(404).json({ message: 'المنتج غير موجود' });
     }
     
-    // إنشاء طلب الاسترجاع
     const returnRequest = await Return.create({
       order,
       user: req.user._id,
@@ -50,7 +48,6 @@ export const createReturnRequest = async (req, res) => {
     
     console.log("  Return request created:", returnRequest._id);
     
-    // إشعار للأدمن
     try {
       await Notification.create({
         user: null,
@@ -116,16 +113,13 @@ export const updateReturnStatus = async (req, res) => {
 
     const oldStatus = returnRequest.status;
 
-    //   تحديث الحالة
     returnRequest.status = status;
     if (adminNote !== undefined) returnRequest.adminNote = adminNote;
     if (refundAmount !== undefined) returnRequest.refundAmount = parseFloat(refundAmount);
     await returnRequest.save();
 
-    //   عند قبول طلب الاسترجاع (من pending إلى approved)
     if (oldStatus === 'pending' && status === 'approved') {
       try {
-        // 1. إعادة المنتج إلى المخزون
         const product = await Product.findById(returnRequest.product._id);
         if (product) {
           product.countInStock += returnRequest.quantity;
@@ -137,7 +131,6 @@ export const updateReturnStatus = async (req, res) => {
       }
     }
 
-    //   إشعار للعميل
     try {
       let notificationTitle = '';
       let notificationMessage = '';

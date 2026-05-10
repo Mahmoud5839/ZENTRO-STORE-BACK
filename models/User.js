@@ -37,9 +37,7 @@ const userSchema = mongoose.Schema(
   }
 );
 
-// تشفير كلمة المرور قبل الحفظ
 userSchema.pre('save', async function (next) {
-  // فقط لو كلمة المرور اتغيرت
   if (!this.isModified('password')) {
     return next();
   }
@@ -52,7 +50,6 @@ userSchema.pre('save', async function (next) {
   }
 });
 
-// مقارنة كلمة المرور
 userSchema.methods.matchPassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
 };

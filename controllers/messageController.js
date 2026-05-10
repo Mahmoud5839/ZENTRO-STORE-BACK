@@ -100,7 +100,6 @@ export const userReply = async (req, res) => {
       return res.status(403).json({ message: 'غير مصرح لك بالرد على هذه التذكرة' });
     }
 
-    // إضافة رد العميل إلى مصفوفة الردود
     ticket.replies.push({
       message: message,
       sender: 'user',

@@ -10,13 +10,11 @@ import { protect, adminOnly } from '../middleware/authMiddleware.js';
 
 const router = express.Router();
 
-//  المستخدم العادي
-router.post('/', protect, createOrder);           // إنشاء طلب
-router.get('/myorders', protect, getMyOrders);    // طلباتي
-router.get('/:id', protect, getOrderById);        // عرض طلب محدد
+router.post('/', protect, createOrder);           
+router.get('/myorders', protect, getMyOrders);    
+router.get('/:id', protect, getOrderById);        
 
-//  الأدمن فقط
-router.get('/', protect, adminOnly, getAllOrders);           // كل الطلبات
-router.put('/:id/complete', protect, adminOnly, completeOrder); // تحديث حالة التوصيل
+router.get('/', protect, adminOnly, getAllOrders);          
+router.put('/:id/complete', protect, adminOnly, completeOrder); 
 
 export default router;

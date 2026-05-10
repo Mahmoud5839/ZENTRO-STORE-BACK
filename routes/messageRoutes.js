@@ -5,7 +5,7 @@ import {
     markAsRead,
     replyToMessage,
     getUserMessages,
-    userReply  // ✅ استيراد الدالة الجديدة
+    userReply  
 } from '../controllers/messageController.js';
 import { protect, adminOnly } from '../middleware/authMiddleware.js';
 
