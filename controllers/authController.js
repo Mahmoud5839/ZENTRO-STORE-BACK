@@ -6,7 +6,6 @@ import nodemailer from 'nodemailer';
 
 
 
-//  إعداد Gmail بشكل صحيح مع nodemailer
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -251,7 +250,7 @@ export const resendVerification = async (req, res) => {
     user.emailVerificationExpire = Date.now() + 30 * 60 * 1000; // 30 دقيقة
     await user.save();
 
-    const verificationUrl = `${process.env.FRONTEND_URL1}/verify-email/${verificationToken}`;
+    const verificationUrl = `${process.env.FRONTEND_URL}/#/verify-email/${verificationToken}`;
 
     const transporter = nodemailer.createTransport({
       host: process.env.EMAIL_HOST || 'smtp.gmail.com', 
